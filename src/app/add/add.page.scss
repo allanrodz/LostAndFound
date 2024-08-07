@@ -1,0 +1,242 @@
+.quick-entry-container {
+  margin-top: 20px;
+  padding: 16px;
+  text-align: center;
+  background-color: #ffe8a5; 
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Ensure it stays above other elements when scrolling */
+}
+
+
+.quick-entry-container h2 {
+  font-size: 1.2em;
+  margin-bottom: 16px;
+}
+
+.quick-entry-grid {
+  display: flex;
+  flex-wrap: nowrap; /* No wrapping, for the horizontal scroll */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  gap: 16px;
+  padding-bottom: 16px;
+  margin: 0 -16px; /* Adjust margin to make the scrolling seamless */
+}
+
+.quick-entry-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.quick-entry-grid::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.quick-entry-grid::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+.quick-entry-grid ion-card {
+  flex: 0 0 auto; /* Prevent cards from shrinking or growing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 120px;
+  text-align: center;
+  --padding: 8px;
+  background-color: white;
+  border-radius: 8px;
+  transition: transform 0.3s ease; /* Smooth zoom effect */
+}
+
+.quick-entry-grid ion-card img {
+  width: 60px;
+  height: 60px;
+}
+
+.quick-entry-grid ion-card ion-label {
+  margin-top: 8px;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: black;
+}
+
+.quick-entry-grid ion-card:hover {
+  transform: scale(1.1); /* Zoom in to 110% */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
+}
+
+@media (min-width: 768px) {
+  .quick-entry-grid {
+    flex-wrap: wrap; /* Revert to wrapping on larger screens */
+    overflow-x: hidden; /* No horizontal scrolling on larger screens */
+    justify-content: center; /* Center the content */
+  }
+}
+
+
+ion-button {
+  margin-top: 24px;
+}
+
+ion-label {
+  font-weight: bold;
+}
+
+.invalid {
+  --border-color: var(--ion-color-danger);
+}
+
+
+.layout-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.preview-container {
+  flex: 1;
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-container img {
+    width: 200px;
+    height: 300px;
+    object-fit: contain; /* Ensure the image scales to fit within the 200x200 box without being cut off */
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for the hover effect */
+}
+
+.preview-container img:hover {
+    transform: scale(1.2); /* Scale up the image by 1.5 times on hover */
+    z-index: 10; /* Bring the image to the front */
+    border: 1px solid #000; /* Optional: Change border color on hover */
+}
+ 
+.webcam-container {
+  flex: 1;
+  text-align: center;
+}
+
+ion-item {
+  margin-bottom: 16px;
+  position: relative; /* Ensures that the error message is positioned relative to the ion-item */
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 0.75em;
+  position: absolute;
+  bottom: -18px; /* Position the error message just below the ion-item */
+  left: 0;
+  margin-left: 16px;
+  margin-bottom: 0;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-row ion-item {
+  flex: 1 1 48%; /* Take up approximately half the width of the row */
+  margin-bottom: 10px; /* Add some space between rows */
+  height: 70px; /* Adjust based on the expected height of each field */
+  box-sizing: border-box; /* Ensure padding doesn't affect the height */
+  overflow: visible; /* Ensure that the error message doesn't get cut off */
+}
+
+.form-row .error-message {
+  flex-basis: 100%; /* Error messages should take up the full row width */
+  color: red;
+  font-size: 12px;
+  margin-top: -8px;
+  margin-bottom: 8px;
+  position: absolute;
+  bottom: -18px; /* Position the error message just below the field */
+  left: 0;
+}
+
+.feedback-form-container {
+  position: fixed;
+  bottom: 70px; /* Adjust based on the position of the FAB */
+  right: 20px;
+  width: 90%;
+  max-width: 400px;
+  z-index: 1000;
+}
+
+.custom-button {
+  font-weight: bold;
+}
+
+// .custom-button {
+//   --background: #080808; /* Green background */
+//   color: rgb(251, 248, 248);
+// }
+
+.custom-button:hover {
+  --background: #00bb5a; /* Slightly darker green on hover */
+  color: rgb(17, 16, 16);
+
+}
+
+
+/* Style for the input text to be green */
+ion-input {
+  --color: rgb(104, 104, 104); /* Applies green color to text in the input and select fields */
+}
+
+/* Additional style for ion-select when an option is selected */
+ion-select .select-text {
+  color: gray !important; /* Ensure the selected text color in dropdown is green */
+} 
+  
+.message-container {
+  background-color: #ff2a00; /* Light yellow background to match existing styles */
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer; /* Make it clear that this is clickable */
+  transition: opacity 0.3s ease-in-out; /* Smooth transition when hiding */
+}
+
+.message-container p {
+  margin: 0;
+  font-size: 14px; /* Smaller font size for a compact look */
+  line-height: 1.4;
+}
+
+.message-container strong {
+  margin-right: 5px; /* Add a bit of space after "Note:" */
+}
+
+.help-message-container {
+  position: fixed;
+  bottom: 70px; /* Position above the FAB button */
+  right: 20px; /* Align to the right, similar to the FAB button */
+  background-color: #ffe8a5; /* Light yellow background */
+  padding: 8px 12px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer; /* Indicate that this can be clicked */
+  z-index: 1000; /* Ensure it appears above other elements */
+  transition: opacity 0.3s ease-in-out; /* Smooth transition for hiding */
+}
+

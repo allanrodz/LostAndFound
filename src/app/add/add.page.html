@@ -1,0 +1,225 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="background-color: black; justify-content: center;">
+    <!-- Image centered with minimal padding -->
+    <div style="text-align: center; width: 100%; padding: 10px 0;">
+      <img src="assets/images.png" 
+           alt="Logo" 
+           style="max-height: 90px; width: auto;">
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+
+  <!-- Message Container -->
+  <div *ngIf="showMessage" class="message-container" (click)="hideMessage()">
+    <p>
+      <strong>Notice:</strong> Labels are assigned automatically. The system checks for the next available label based on existing items. For example, if labels 1, 2, 3, 4, and 5 are in use and label 3 becomes available (e.g., the item is collected), the next new item will automatically be assigned label 3. The assigned label will be shown in the confirmation message once the item is added.
+    </p>
+  </div>
+
+  <div class="quick-entry-container">
+    <!-- <h2 style="font-weight: bold; text-align: left; padding-left: 75px;">Quick Entry</h2> -->
+    <div class="quick-entry-grid">
+      <ion-card *ngFor="let item of quickEntryItems" (click)="selectItem(item)">
+        <img [src]="item.icon" alt="{{item.label}}" />
+        <ion-label>{{ item.label }}</ion-label>
+      </ion-card>
+    </div>
+  </div>
+
+
+  <div class="layout-container">
+    <!-- Image preview container on the left -->
+    <div class="preview-container">
+      <div *ngIf="imagePreview" style="text-align: center; margin-top: 20px;">
+        <img [src]="imagePreview" alt="Image Preview" style="max-width: 100%; height: auto; border: 1px solid #ccc; padding: 10px;" />
+      </div>
+    </div>
+
+    <div class="webcam-container">
+      <ion-item [class.invalid]="itemForm.get('image')?.invalid && itemForm.get('image')?.touched">
+        <ion-label>Image</ion-label>
+        <input type="file" (change)="onFileChange($event)" />
+        <ion-icon name="camera" slot="end" (click)="takePicture()" style="cursor: pointer; margin-left: 10px;"></ion-icon>
+      </ion-item>
+    
+      <div id="webcam-container" *ngIf="showWebcam" style="text-align: center; margin-top: 20px;">
+        <video id="video" width="320" height="240" autoplay></video>
+        <br />
+        <ion-range min="0" max="4" step="0.1" [(ngModel)]="brightness" (ionChange)="applyBrightness()">
+          <ion-label slot="start">Brightness</ion-label>
+          <ion-label slot="end">{{ brightness }}</ion-label>
+        </ion-range>
+        <ion-button (click)="captureWebcamImage()">Capture Image</ion-button>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Form can go here -->
+  <form #itemFormElement [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <!-- Club Selection -->
+      <!-- <ion-item [class.invalid]="itemForm.get('club')?.invalid && itemForm.get('club')?.touched">
+        <ion-label>Club</ion-label>
+        <ion-select formControlName="club">
+          <ion-select-option value="Aston Quay">Aston Quay</ion-select-option>
+          <ion-select-option value="Clontarf">Clontarf</ion-select-option>
+          <ion-select-option value="Sandymount">Sandymount</ion-select-option>
+          <ion-select-option value="Westmanstown">Westmanstown</ion-select-option>
+          <ion-select-option value="Leopardstown">Leopardstown</ion-select-option>
+          <ion-select-option value="Dun Laoghaire">Dun Laoghaire</ion-select-option>
+        </ion-select>
+      </ion-item> -->
+
+      <!-- Item Name and Brand Side by Side -->
+      <div class="form-row">
+        <ion-item [class.invalid]="itemForm.get('name')?.invalid && itemForm.get('name')?.touched">
+          <ion-label position="floating">Item Name and Description</ion-label>
+          <ion-input 
+            formControlName="name"
+            placeholder="e.g., Sunglasses, Ray-Bans with a scratch on the lenses">
+          </ion-input>
+        </ion-item>
+      
+      
+        
+    
+        <!-- <ion-item [class.invalid]="itemForm.get('brand')?.invalid && itemForm.get('brand')?.touched">
+          <ion-label position="floating">Brand</ion-label>
+          <ion-input formControlName="brand"></ion-input>
+        </ion-item> -->
+      </div>
+    
+      <!-- Category and Gender Fields Side by Side -->
+      <div class="form-row">
+        <ion-item [class.invalid]="itemForm.get('category')?.invalid && itemForm.get('category')?.touched">
+          <ion-label>Category</ion-label>
+          <ion-select formControlName="category">
+            <ion-select-option value="clothes">Clothes</ion-select-option>
+            <ion-select-option value="jewelry">Jewelry</ion-select-option>
+            <ion-select-option value="accessories">Accessories</ion-select-option>
+            <ion-select-option value="toiletry">Toiletry</ion-select-option>
+            <ion-select-option value="electronics">Electronics</ion-select-option>
+            <ion-select-option value="other">Other</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+  
+        <ion-item [class.invalid]="itemForm.get('gender')?.invalid && itemForm.get('gender')?.touched">
+          <ion-label>Gender</ion-label>
+          <ion-select formControlName="gender">
+            <ion-select-option value="feminine">Feminine</ion-select-option>
+            <ion-select-option value="masculine">Masculine</ion-select-option>
+            <ion-select-option value="unisex">Unisex</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    
+      <!-- Color and Condition Fields Side by Side -->
+      <div class="form-row">
+        <ion-item [class.invalid]="itemForm.get('color')?.invalid && itemForm.get('color')?.touched">
+          <ion-label>Color</ion-label>
+          <ion-select formControlName="color">
+            <ion-select-option value="red">Red</ion-select-option>
+            <ion-select-option value="blue">Blue</ion-select-option>
+            <ion-select-option value="green">Green</ion-select-option>
+            <ion-select-option value="yellow">Yellow</ion-select-option>
+            <ion-select-option value="black">Black</ion-select-option>
+            <ion-select-option value="white">White</ion-select-option>
+            <ion-select-option value="gray">Gray</ion-select-option>
+            <ion-select-option value="pink">Pink</ion-select-option>
+            <ion-select-option value="purple">Purple</ion-select-option>
+            <ion-select-option value="orange">Orange</ion-select-option>
+            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="multicolor">Multicolor</ion-select-option>
+            <ion-select-option value="no color">No Color</ion-select-option>
+
+          </ion-select>
+        </ion-item>
+        
+        <ion-item [class.invalid]="itemForm.get('condition')?.invalid && itemForm.get('condition')?.touched">
+          <ion-label>Condition</ion-label>
+          <ion-select formControlName="condition">
+            <ion-select-option value="new">New</ion-select-option>
+            <ion-select-option value="like new">Like New</ion-select-option>
+            <ion-select-option value="used">Used</ion-select-option>
+            <ion-select-option value="worn">Worn</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+    
+      <!-- Storage and Identification Number Side by Side -->
+      <div class="form-row">
+        <ion-item [class.invalid]="itemForm.get('storage')?.invalid && itemForm.get('storage')?.touched">
+          <ion-label position="floating">Storage</ion-label>
+          <ion-input formControlName="storage"          
+           placeholder="e.g., Box 1, Reception Drawer"></ion-input>
+
+        </ion-item>
+
+    
+        <!-- <ion-item [class.invalid]="itemForm.get('bag')?.invalid && itemForm.get('bag')?.touched">
+          <ion-label position="floating">Label Identification Number</ion-label>
+          <ion-input
+            formControlName="bag"
+            [placeholder]="getBagPlaceholder()">
+          </ion-input>
+        
+        </ion-item> -->
+        
+      </div>
+      
+      <ion-button expand="full" type="submit" class="custom-button">
+        <ion-spinner *ngIf="isSubmitting" name="crescent"></ion-spinner>
+        <span *ngIf="!isSubmitting">Add Item</span>
+      </ion-button>
+      
+    </ion-list>
+  </form>
+
+  <!-- Need Help Message -->
+  <div *ngIf="showHelpMessage" class="help-message-container" (click)="hideHelpMessage()">
+    Need Help?
+  </div>
+  <!-- Floating Feedback Button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="toggleFeedbackForm()">
+      <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Feedback Form -->
+  <div *ngIf="isFeedbackFormVisible" class="feedback-form-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Did you find a bug or want to give us some feedback?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-radio-group [(ngModel)]="feedbackType">
+            <ion-item>
+              <ion-label>Bug Report</ion-label>
+              <ion-radio slot="start" value="bug"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>General Feedback</ion-label>
+              <ion-radio slot="start" value="feedback"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+        <ion-item>
+          <ion-label position="floating">Your Feedback</ion-label>
+          <ion-textarea [(ngModel)]="feedbackText"></ion-textarea>
+        </ion-item>
+        <ion-button expand="full" (click)="submitFeedback()">Submit Feedback</ion-button>
+        <ion-button expand="full" color="light" (click)="toggleFeedbackForm()">Close</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+  
+  

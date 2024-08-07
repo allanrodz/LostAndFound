@@ -1,0 +1,65 @@
+.modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure the details and image are spaced out */
+  padding: 20px;
+  position: relative; /* Allows child elements to be positioned relative to this container */
+}
+
+.details-container {
+  flex: 1;
+  padding-right: 20px;
+  text-align: left; /* Align text to the left within the details */
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition for hiding */
+}
+
+.details-container p {
+  margin: 10px 0; /* Add some space between the fields */
+}
+
+.image-container {
+  flex-shrink: 0; /* Prevent the image container from shrinking */
+  width: 200px; /* Fixed width for the image */
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out; /* Smooth transition for scaling */
+  z-index: 1; /* Ensure image stays on top during hover */
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 200px; /* Fixed height for the image */
+  border-radius: 8px;
+  object-fit: cover; /* Ensure the image covers the container without stretching */
+  transition: transform 0.3s ease-in-out; /* Smooth transition for scaling */
+}
+
+.image-container:hover {
+  width: 100%; /* Make it full width of the modal */
+  height: auto; /* Adjust height accordingly */
+  justify-content: center; /* Center the image */
+}
+
+.image-container:hover img {
+  transform: scale(1.2); /* Scale the image slightly */
+  border-radius: 0; /* Remove the border radius */
+}
+
+.image-container:hover ~ .details-container {
+  opacity: 0; /* Hide the details */
+  visibility: hidden; /* Prevent details from being focusable or interactable */
+}
+
+ion-footer {
+  padding: 10px;
+}
+
+
+
+.custom-header ion-button {
+  color: rgb(247, 5, 5); /* Ensures the close button is also white */
+}
+

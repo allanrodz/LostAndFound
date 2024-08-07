@@ -1,0 +1,52 @@
+/* Styles for the filter container */
+.filter-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #ffe8a5;
+  border-bottom: 1px solid #ccc;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.filter-item {
+  flex: 1;
+  margin-right: 10px;
+  min-width: 150px;
+}
+
+/* Styles for the grid container and cards */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid layout */
+  gap: 15px; /* Increased space between the items */
+  padding: 15px; /* Increased padding around the grid container */
+}
+
+.grid-item {
+
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #fff7d4; /* Light yellow background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.grid-item:hover {
+  transform: scale(1.05); /* Slightly scale up on hover (105%) */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+.grid-item ion-card-content {
+  padding: 16px;
+}
+
+.grid-item ion-thumbnail img {
+  border-radius: 8px; /* Match border radius of the card */
+}
+
+.grid-item ion-item {
+  --ion-item-background: transparent;
+}

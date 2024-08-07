@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="background-color: black; justify-content: center;">
+    <div style="text-align: center; width: 100%; padding: 10px 0;">
+      <a href="https://westwoodclub-findmyitem.web.app/tabs/add">
+        <img src="assets/images.png" 
+             alt="Logo" 
+             style="max-height: 90px; width: auto;">
+      </a>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="grid-container">
+    <div class="half-chart">
+      <canvas #clubLocationChart></canvas>
+    </div>
+    <div class="half-chart">
+      <canvas #itemsOverTimeChart></canvas>
+    </div>
+    <div class="scrollable-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Collected Item Name</th>
+            <th>Bag</th>
+            <th>Category</th>
+            <th>Club</th>
+            <th>Date Collected</th>
+            <th>Color</th>
+            <th>Condition</th>
+            <th>Date Logged</th>
+            <th>Gender</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of collectedItems">
+            <td>{{ item.name }}</td>
+            <td>{{ item.bag }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.club }}</td>
+            <td>{{ item.collectedDate | date }}</td>
+            <td>{{ item.color }}</td>
+            <td>{{ item.condition }}</td>
+            <td>{{ item.date | date }}</td>
+            <td>{{ item.gender }}</td>
+            <td>
+              <img [src]="item.imageUrl" alt="Item Image" width="50px" height="50px">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

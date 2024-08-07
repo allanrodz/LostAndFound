@@ -1,0 +1,139 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="background-color: black; justify-content: center;">
+    <!-- Image centered with minimal padding -->
+    <div style="text-align: center; width: 100%; padding: 10px 0;">
+      <a href="https://westwoodclub-findmyitem.web.app/tabs/add">
+        <img src="assets/images.png" 
+             alt="Logo" 
+             style="max-height: 90px; width: auto;">
+      </a>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Expired Items Message Container -->
+  <div *ngIf="showExpiredItemsMessage" class="message-container" (click)="hideExpiredItemsMessage()">
+    <p>
+      <strong>Notice:</strong> Items expire after 21 days. You can either keep them longer or discard them. If your club has expired items, you can generate a report, clear them out of their respective storage locations, and choose to move them to an expired items database, so they no longer appear in the search tab.
+    </p>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filter-container">
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Club</ion-label>
+      <ion-select [(ngModel)]="filters.club">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="Aston Quay">Aston Quay</ion-select-option>
+        <ion-select-option value="Clontarf">Clontarf</ion-select-option>
+        <ion-select-option value="Sandymount">Sandymount</ion-select-option>
+        <ion-select-option value="Westmanstown">Westmanstown</ion-select-option>
+        <ion-select-option value="Leopardstown">Leopardstown</ion-select-option>
+        <ion-select-option value="Dun Laoghaire">Dun Laoghaire</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="filters.category">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="clothes">Clothes</ion-select-option>
+        <ion-select-option value="jewelry">Jewelry</ion-select-option>
+        <ion-select-option value="accessories">Accessories</ion-select-option>
+        <ion-select-option value="toiletry">Toiletry</ion-select-option>
+        <ion-select-option value="electronics">Electronics</ion-select-option>
+        <ion-select-option value="other">Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Gender</ion-label>
+      <ion-select [(ngModel)]="filters.gender">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="feminine">Feminine</ion-select-option>
+        <ion-select-option value="masculine">Masculine</ion-select-option>
+        <ion-select-option value="unisex">Unisex</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Color</ion-label>
+      <ion-select [(ngModel)]="filters.color">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="red">Red</ion-select-option>
+        <ion-select-option value="blue">Blue</ion-select-option>
+        <ion-select-option value="green">Green</ion-select-option>
+        <ion-select-option value="yellow">Yellow</ion-select-option>
+        <ion-select-option value="black">Black</ion-select-option>
+        <ion-select-option value="white">White</ion-select-option>
+        <ion-select-option value="gray">Gray</ion-select-option>
+        <ion-select-option value="pink">Pink</ion-select-option>
+        <ion-select-option value="purple">Purple</ion-select-option>
+        <ion-select-option value="orange">Orange</ion-select-option>
+        <ion-select-option value="brown">Brown</ion-select-option>
+        <ion-select-option value="multicolor">Multicolor</ion-select-option>
+        <ion-select-option value="no color">No Color</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Condition</ion-label>
+      <ion-select [(ngModel)]="filters.condition">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="new">New</ion-select-option>
+        <ion-select-option value="like new">Like New</ion-select-option>
+        <ion-select-option value="used">Used</ion-select-option>
+        <ion-select-option value="worn">Worn</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Sort By</ion-label>
+      <ion-select [(ngModel)]="filters.sortOrder">
+        <ion-select-option value="newest">Newest First</ion-select-option>
+        <ion-select-option value="oldest">Oldest First</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <ion-button expand="full" (click)="generateReport()">Generate All Items Report</ion-button>
+  <ion-button expand="full" color="danger" (click)="generateExpiredItemsReport()">Generate Expired Items Report</ion-button>
+  <ion-button *ngIf="showDiscardButton" expand="full" color="warning" (click)="discardExpiredItems()">Discard Expired Items</ion-button>
+
+  <!-- Report Preview Section -->
+  <div *ngIf="reportData.length">
+    <h2>Report Preview</h2>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Club</th>
+          <th>Category</th>
+          <th>Gender</th>
+          <th>Color</th>
+          <th>Condition</th>
+          <th>Storage</th>
+          <th>Bag/Label</th>
+          <th>Date</th> <!-- Use the preformatted date here -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of reportData">
+          <td>{{ item.name }}</td>
+          <td>{{ item.club }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.gender }}</td>
+          <td>{{ item.color }}</td>
+          <td>{{ item.condition }}</td>
+          <td>{{ item.storage }}</td>
+          <td>{{ item.bag }}</td>
+          <td>{{ item.date }}</td> <!-- Use the preformatted date here -->
+        </tr>
+      </tbody>
+    </table>
+
+    <ion-button expand="full" (click)="downloadReport()">Download Report</ion-button>
+  </div>
+</ion-content>

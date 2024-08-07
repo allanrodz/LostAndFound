@@ -1,0 +1,107 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="justify-content: center;">
+    <div style="text-align: center; width: 100%; padding: 10px 0;">
+      <img src="assets/images.png" 
+           alt="Logo" 
+           style="max-height: 90px; width: auto;">
+    </div>
+  </ion-toolbar>
+  <ion-toolbar style="text-align: center;  ">
+    <ion-title>Search Lost Item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scrollY="true">
+    <form [formGroup]="inquiryForm" (ngSubmit)="submitInquiryForm()">
+    
+    <ion-item>
+      <ion-label position="stacked">Your Name</ion-label>
+      <ion-input formControlName="memberName" type="text" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="inquiryForm.get('memberName')?.hasError('required') && inquiryForm.get('memberName')?.touched">
+      Your name is required.
+    </ion-text>
+    
+    <ion-item>
+      <ion-label position="stacked">Phone Number</ion-label>
+      <ion-input formControlName="phoneNumber" type="tel" required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Email Address</ion-label>
+      <ion-input formControlName="emailAddress" type="email" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="inquiryForm.get('emailAddress')?.hasError('required') && inquiryForm.get('emailAddress')?.touched">
+      Your email address is required.
+    </ion-text>
+    <ion-text color="danger" *ngIf="inquiryForm.get('emailAddress')?.hasError('email') && inquiryForm.get('emailAddress')?.touched">
+      Please enter a valid email address.
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Item Name and Description</ion-label>
+      <ion-input 
+        formControlName="name" 
+        type="text" 
+        required 
+        placeholder="e.g., Sunglasses, Ray-Bans with a scratch on the lenses">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="inquiryForm.get('name')?.hasError('required') && inquiryForm.get('name')?.touched">
+      Item name is required.
+    </ion-text>
+    
+    <ion-item>
+      <ion-label position="stacked">Club</ion-label>
+      <ion-select formControlName="club" required>
+        <ion-select-option value="Aston Quay">Aston Quay</ion-select-option>
+        <ion-select-option value="Clontarf">Clontarf</ion-select-option>
+        <ion-select-option value="Sandymount">Sandymount</ion-select-option>
+        <ion-select-option value="Westmanstown">Westmanstown</ion-select-option>
+        <ion-select-option value="Leopardstown">Leopardstown</ion-select-option>
+        <ion-select-option value="Dun Laoghaire">Dun Laoghaire</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text color="danger" *ngIf="inquiryForm.get('club')?.hasError('required') && inquiryForm.get('club')?.touched">
+      Please select a club.
+    </ion-text>
+    
+    <ion-item>
+      <ion-label position="stacked">Gender</ion-label>
+      <ion-select formControlName="gender">
+        <ion-select-option value="feminine">Feminine</ion-select-option>
+        <ion-select-option value="masculine">Masculine</ion-select-option>
+        <ion-select-option value="unisex">Unisex</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Color</ion-label>
+      <ion-select formControlName="color" required>
+        <ion-select-option value="red">Red</ion-select-option>
+        <ion-select-option value="blue">Blue</ion-select-option>
+        <ion-select-option value="green">Green</ion-select-option>
+        <ion-select-option value="yellow">Yellow</ion-select-option>
+        <ion-select-option value="black">Black</ion-select-option>
+        <ion-select-option value="white">White</ion-select-option>
+        <ion-select-option value="gray">Gray</ion-select-option>
+        <ion-select-option value="pink">Pink</ion-select-option>
+        <ion-select-option value="purple">Purple</ion-select-option>
+        <ion-select-option value="orange">Orange</ion-select-option>
+        <ion-select-option value="brown">Brown</ion-select-option>
+        <ion-select-option value="multicolor">Multicolor</ion-select-option>
+        <ion-select-option value="no color">No Color</ion-select-option>
+
+      </ion-select>
+    </ion-item>
+    
+    <ion-text color="danger" *ngIf="inquiryForm.get('color')?.hasError('required') && inquiryForm.get('color')?.touched">
+      Please select a color.
+    </ion-text>
+    
+    <ion-button expand="full" type="submit" [disabled]="loading">
+      <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+      <span *ngIf="!loading">Submit Inquiry</span>
+    </ion-button>
+  </form>
+</ion-content>

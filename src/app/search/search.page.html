@@ -1,0 +1,141 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="background-color: black; justify-content: center;">
+    <!-- Image centered with minimal padding -->
+    <div style="text-align: center; width: 100%; padding: 10px 0;">
+      <a href="https://westwoodclub-findmyitem.web.app/tabs/add">
+        <img src="assets/images.png" 
+             alt="Logo" 
+             style="max-height: 90px; width: auto;">
+      </a>
+    </div>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">search</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Filter Section -->
+  <div class="filter-container">
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Club</ion-label>
+      <ion-select [(ngModel)]="filters.club" (ionChange)="applyFilters()">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="Aston Quay">Aston Quay</ion-select-option>
+        <ion-select-option value="Clontarf">Clontarf</ion-select-option>
+        <ion-select-option value="Sandymount">Sandymount</ion-select-option>
+        <ion-select-option value="Westmanstown">Westmanstown</ion-select-option>
+        <ion-select-option value="Leopardstown">Leopardstown</ion-select-option>
+        <ion-select-option value="Dun Laoghaire">Dun Laoghaire</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="filters.category" (ionChange)="applyFilters()">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="clothes">Clothes</ion-select-option>
+        <ion-select-option value="jewelry">Jewelry</ion-select-option>
+        <ion-select-option value="accessories">Accessories</ion-select-option>
+        <ion-select-option value="toiletry">Toiletry</ion-select-option>
+        <ion-select-option value="electronics">Electronics</ion-select-option>
+        <ion-select-option value="other">Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Gender</ion-label>
+      <ion-select [(ngModel)]="filters.gender" (ionChange)="applyFilters()">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="feminine">Feminine</ion-select-option>
+        <ion-select-option value="masculine">Masculine</ion-select-option>
+        <ion-select-option value="unisex">Unisex</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Color</ion-label>
+      <ion-select [(ngModel)]="filters.color" (ionChange)="applyFilters()">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="red">Red</ion-select-option>
+        <ion-select-option value="blue">Blue</ion-select-option>
+        <ion-select-option value="green">Green</ion-select-option>
+        <ion-select-option value="yellow">Yellow</ion-select-option>
+        <ion-select-option value="black">Black</ion-select-option>
+        <ion-select-option value="white">White</ion-select-option>
+        <ion-select-option value="gray">Gray</ion-select-option>
+        <ion-select-option value="pink">Pink</ion-select-option>
+        <ion-select-option value="purple">Purple</ion-select-option>
+        <ion-select-option value="orange">Orange</ion-select-option>
+        <ion-select-option value="brown">Brown</ion-select-option>
+        <ion-select-option value="multicolor">Multicolor</ion-select-option>
+        <ion-select-option value="no color">No Color</ion-select-option>
+
+
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Condition</ion-label>
+      <ion-select [(ngModel)]="filters.condition" (ionChange)="applyFilters()">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="new">New</ion-select-option>
+        <ion-select-option value="like new">Like New</ion-select-option>
+        <ion-select-option value="used">Used</ion-select-option>
+        <ion-select-option value="worn">Worn</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- <ion-item lines="none" class="filter-item">
+      <ion-label>Brand</ion-label>
+      <ion-select [(ngModel)]="filters.brand" (ionChange)="applyFilters()">
+        <ion-select-option value="">All</ion-select-option>
+        <ion-select-option value="nike">Nike</ion-select-option>
+        <ion-select-option value="adidas">Adidas</ion-select-option>
+        <ion-select-option value="puma">Puma</ion-select-option>
+        <ion-select-option value="under armour">Under Armour</ion-select-option>
+        <ion-select-option value="reebok">Reebok</ion-select-option>
+        <ion-select-option value="other">Other</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+
+    <ion-item lines="none" class="filter-item">
+      <ion-label>Sort By</ion-label>
+      <ion-select [(ngModel)]="filters.sortOrder" (ionChange)="applyFilters()">
+        <ion-select-option value="newest">Newest First</ion-select-option>
+        <ion-select-option value="oldest">Oldest First</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+  </div>
+
+  <!-- Keyword Search -->
+  <ion-item style="justify-content: center; text-align: center; padding-top: 5px;">
+    <ion-input [(ngModel)]="filters.keyword" (ionInput)="applyFilters()" style="text-align: center; background-color: beige; color: black;" placeholder="Search by Keyword"></ion-input>
+  </ion-item>
+
+
+<!-- Grid Layout for Cards -->
+<div class="grid-container">
+  <ion-card *ngFor="let item of filteredItems$ | async" class="grid-item" (click)="openItemDetail(item)">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>
+          <h2><strong>{{ item.name }}</strong></h2>
+          <p><strong>Club:</strong> {{ item.club }}</p>
+          <p><strong>Storage:</strong> {{ item.storage }}</p>
+          <p><strong>Label:</strong> {{ item.bag }}</p>
+          <p><strong>Logged on:</strong> {{ formatDate(item.date) }}</p>
+        </ion-label>
+        <ion-thumbnail slot="end" style="height: 120px; width: 120px;">
+          <img [src]="item.imageUrl" alt="{{ item.name }}" />
+        </ion-thumbnail>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</div>
+</ion-content>

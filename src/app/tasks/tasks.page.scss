@@ -1,0 +1,85 @@
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+
+/* Styles for the filter container */
+// .filter-container {
+//   margin-top: 20px;
+//   display: flex;
+//   justify-content: space-between;
+//   flex-wrap: wrap; /* Allows the filter items to wrap to the next line on smaller screens */
+//   padding: 10px;
+//   background-color: #ffe8a5; /* Light beige background */
+//   border-bottom: 1px solid #ccc;
+// }
+
+// .filter-item {
+//   flex: 1;
+//   margin-right: 10px;
+//   min-width: 150px;
+//   max-width: 250px; /* Restrict the max width to keep items manageable on larger screens */
+//   margin-bottom: 10px; /* Adds spacing between rows on smaller screens */
+// }
+
+.filter-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #ffe8a5;
+  border-bottom: 1px solid #ccc;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.filter-item {
+  flex: 1;
+  margin-right: 10px;
+  min-width: 150px;
+}
+
+.message-container {
+  background-color: #ff2a00; /* Light yellow background to match existing styles */
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer; /* Make it clear that this is clickable */
+  transition: opacity 0.3s ease-in-out; /* Smooth transition when hiding */
+}
+
+.message-container p {
+  margin: 0;
+  font-size: 14px; /* Smaller font size for a compact look */
+  line-height: 1.4;
+}
+
+.message-container strong {
+  margin-right: 5px; /* Add a bit of space after "Notice:" */
+}

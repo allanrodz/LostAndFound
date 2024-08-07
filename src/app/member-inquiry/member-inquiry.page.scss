@@ -1,0 +1,33 @@
+ion-content {
+    padding: 20px;
+  }
+  
+  ion-item {
+    margin-bottom: 15px;
+  }
+  
+  ion-button {
+    margin-top: 20px;
+  }
+  
+  .color-circle {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  .red { --background-color: red; }
+  .blue { background-color: blue; }
+  .green { background-color: green; }
+  .yellow { background-color: yellow; }
+  .black { background-color: black; }
+  .white { background-color: white; border: 1px solid #ccc; }
+  .gray { background-color: gray; }
+  .pink { background-color: pink; }
+  .purple { background-color: purple; }
+  .orange { background-color: orange; }
+  .brown { background-color: brown; }
+  

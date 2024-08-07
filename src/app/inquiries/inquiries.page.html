@@ -1,0 +1,177 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="background-color: black; justify-content: center;">
+    <!-- Image centered with minimal padding -->
+    <div style="text-align: center; width: 100%; padding: 10px 0;">
+      <a href="https://westwoodclub-findmyitem.web.app/tabs/add">
+        <img src="assets/images.png" 
+             alt="Logo" 
+             style="max-height: 90px; width: auto;">
+      </a>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Inquiries</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <!-- AI Improvement Message Container -->
+  <div *ngIf="showAiMessage" class="message-container" (click)="hideAiMessage()">
+    <p>
+      <strong>Notice:</strong> The matching tool is getting AI improvements soon! In the meantime, members can use the search item form. All inquiries will be recorded, and members can be contacted if you find a match manually.
+    </p>
+  </div>
+
+  <!-- Club Filter -->
+  <div class="filter-container">
+    <ion-item>
+      <!-- <ion-label>Club </ion-label> -->
+      <ion-select [(ngModel)]="selectedClub" (ionChange)="filterInquiries()">
+        <ion-select-option value="all">All Clubs</ion-select-option>
+        <ion-select-option *ngFor="let club of clubs" [value]="club">{{ club }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <!-- Open Inquiries Table -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Open Inquiries With Matching Item</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Member Name</th>
+              <th>Phone Number</th>
+              <th>Email Address</th>
+              <th>Item Name/Description</th>
+              <th>Club</th>
+              <th>Gender</th>
+              <th>Color</th>
+              <th>Open Item Details</th> <!-- New Column -->
+              <th>Send Email to Member</th> <!-- New Column -->
+              <th>Confirm Email Sent</th> <!-- New Column -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let inquiry of filteredOpenInquiries | async">
+              <td>{{ inquiry.memberName }}</td>
+              <td>{{ inquiry.phoneNumber }}</td>
+              <td>{{ inquiry.emailAddress }}</td>
+              <td>{{ inquiry.name }}</td>
+              <td>{{ inquiry.club }}</td>
+              <td>{{ inquiry.gender }}</td>
+              <td>{{ inquiry.color }}</td>
+              <td>
+                <ion-button size="small" color="primary" (click)="openItemDetail(inquiry)">
+                  Open Item Details
+                </ion-button>
+              </td>
+              <td>
+                <ion-button size="small" color="primary" (click)="sendEmailToMember(inquiry)">
+                  Send Email to Member
+                </ion-button>
+              </td>
+              <td>
+                <ion-button size="small" color="success" (click)="confirmEmailSent(inquiry.id)">
+                  Confirm Email Sent
+                </ion-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  
+  <!-- Updated All Inquiries Table -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>All Inquiries</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Member Name</th>
+              <th>Phone Number</th>
+              <th>Email Address</th>
+              <th>Item Name/Description</th>
+              <th>Club</th>
+              <th>Gender</th>
+              <th>Color</th>
+              <th>Status</th>
+              <th>Match Item Manually</th>
+              <th>Open Item Details</th>
+              <th>Send Email to Member</th>
+              <th>Confirm Email Sent</th> <!-- New Column -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let inquiry of filteredAllInquiries | async">
+              <td>{{ inquiry.memberName }}</td>
+              <td>{{ inquiry.phoneNumber }}</td>
+              <td>{{ inquiry.emailAddress }}</td>
+              <td>{{ inquiry.name }}</td>
+              <td>{{ inquiry.club }}</td>
+              <td>{{ inquiry.gender }}</td>
+              <td>{{ inquiry.color }}</td>
+              <td>{{ inquiry.status }}</td>
+              <td>
+                <ion-select [(ngModel)]="inquiry.selectedItemName" 
+                            [placeholder]="inquiryPlaceholders[inquiry.id] || 'Select Item'" 
+                            (ionChange)="assignItemManually(inquiry)">
+                  <ion-select-option *ngFor="let item of availableItems" [value]="item.name">
+                    {{ item.name }}
+                  </ion-select-option>
+                </ion-select>
+              </td>
+              <td>
+                <ion-button size="small" color="primary" (click)="openItemDetailManuallySelectedItem(inquiry)">
+                  Open Item Details
+                </ion-button>
+              </td>
+              <td>
+                <ion-button size="small" color="primary" (click)="sendManualEmailToMember(inquiry)">
+                  Send Email to Member
+                </ion-button>
+              </td>
+              <td>
+                <ion-button size="small" color="success" (click)="confirmEmailSentToMember(inquiry)">
+                  Confirm Email Sent
+                </ion-button>
+              </td> <!-- New Column -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- QR Code and Instructions -->
+  <ion-card>
+    <ion-card-content>
+      <ion-title>QR Code for Members</ion-title>
+      <div class="qr-container">
+        <div class="qr-code">
+          <img src="assets/qr.png" alt="QR Code">
+        </div>
+        <div class="qr-instructions">
+          <h3>Simple Steps:</h3>
+          <p>1. Scan with your phone.</p>
+          <p>2. Complete the form.</p>
+          <p>3. That’s it!</p>
+          <ion-button expand="full" (click)="downloadQrInstructions()">
+            Download QR Code & Instructions
+          </ion-button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

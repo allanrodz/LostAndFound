@@ -1,17 +1,83 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-title style="text-align: center;">Search Lost Property</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="search-content">
+  <ion-segment [(ngModel)]="searchCriteria">
+    <ion-segment-button value="keywords">
+      <ion-label>Keywords</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dates">
+      <ion-label>Dates</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ng-container *ngIf="searchCriteria === 'keywords'">
+    <ion-item>
+      <ion-label position="floating">Keyword</ion-label>
+      <ion-input [(ngModel)]="keyword" type="text"></ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="searchByKeyword()">Search by Keyword</ion-button>
+  </ng-container>
+
+  <ng-container *ngIf="searchCriteria === 'dates'" >
+    <ion-item>
+      <ion-label position="floating">{{ datePickerLabel }}</ion-label>
+      <ion-datetime style="text-align: center;"
+        [(ngModel)]="tempDate"
+        display-format="MM/DD/YYYY"
+        picker-format="MM/DD/YYYY"
+        (ionChange)="onDateChange($event)"
+      ></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="dateRange.start">
+      <ion-label>Selected Start Date: {{ dateRange.start | date:'MM/dd/yyyy' }}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="dateRange.end">
+      <ion-label>Selected End Date: {{ dateRange.end | date:'MM/dd/yyyy' }}</ion-label>
+    </ion-item>
+    <ion-button expand="full" (click)="toggleDateSelection()">Select {{ dateSelectionMode === 'start' ? 'End' : 'Start' }} Date</ion-button>
+    <ion-button expand="full" (click)="searchByDates()">Search by Dates</ion-button>
+  </ng-container>
+
+  <ion-list *ngIf="searchResults.length > 0">
+    <ion-item *ngFor="let item of searchResults" (click)="selectSearchResult(item)">
+      <ion-label>{{ item.itemId }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ng-container *ngIf="selectedItem">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Item Details</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Item Name</ion-label>
+          <ion-input [(ngModel)]="selectedItem.name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Description</ion-label>
+          <ion-input [(ngModel)]="selectedItem.description"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Box</ion-label>
+          <ion-input [(ngModel)]="selectedItem.box"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Bag</ion-label>
+          <ion-input [(ngModel)]="selectedItem.bag"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Date</ion-label>
+          <ion-input [(ngModel)]="selectedItem.date" disabled></ion-input>
+        </ion-item>
+        <ion-button expand="full" (click)="editItem()">Edit Item</ion-button>
+        <ion-button expand="full" (click)="markAsCollected()">Mark as Collected</ion-button>
+        <ion-button expand="full" (click)="generatePDF()">Generate PDF</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 </ion-content>

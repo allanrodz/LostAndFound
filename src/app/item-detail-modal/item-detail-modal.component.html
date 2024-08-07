@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar class="custom-header">
+    <ion-title>{{ item.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="modal-content">
+    <!-- Description on the left side -->
+    <div class="details-container">
+      <p><strong>Category:</strong> {{ item.category }}</p>
+      <p><strong>Club:</strong> {{ item.club }}</p>
+      <p><strong>Gender:</strong> {{ item.gender }}</p>
+      <p><strong>Color:</strong> {{ item.color }}</p>
+      <p><strong>Condition:</strong> {{ item.condition }}</p>
+      <p><strong>Storage:</strong> {{ item.storage }}</p>
+      <p><strong>Label:</strong> {{ item.bag }}</p>
+      <p><strong>Logged on:</strong> {{ formatDate(item.date) }}</p>
+    </div>
+
+    <!-- Image on the right side -->
+    <div class="image-container">
+      <img [src]="item.imageUrl" alt="{{ item.name }}" />
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full" color="danger" (click)="markAsCollected()">
+    Mark as Collected
+  </ion-button>
+</ion-footer>
